@@ -1,0 +1,7 @@
+<div class="d-flex gap-2 mb-4">
+  @for (o of opciones; track o.id) {
+    <a [routerLink]="o.ruta" class="btn btn-sm" [class.btn-primary]="o.id === activa()" [class.btn-outline-light]="o.id !== activa()">
+      {{ o.texto }}
+    </a>
+  }
+</div>

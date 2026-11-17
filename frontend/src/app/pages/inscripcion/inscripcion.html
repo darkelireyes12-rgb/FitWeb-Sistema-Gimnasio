@@ -1,0 +1,83 @@
+@if (sede && plan(); as p) {
+  <div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 section-title">
+      <h2 class="fw-bold text-white m-0">Finaliza tu inscripción</h2>
+      <a [routerLink]="['/planes', sede.id]" class="btn btn-link text-decoration-none text-white-50 p-0 fw-bold">
+        <i class="bi bi-arrow-left me-1"></i> Cambiar plan
+      </a>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="resumen-box p-4">
+          <h4 class="fw-bold text-white mb-3">Resumen de tu compra</h4>
+
+          <div class="resumen-fila">
+            <span class="text-white-50">Lugar</span>
+            <span class="text-end">
+              <strong>{{ sede.nombre }}</strong>
+              <br />
+              <small class="text-white-50">{{ sede.direccion }}</small>
+            </span>
+          </div>
+          <div class="resumen-fila">
+            <span class="text-white-50">Membresía</span>
+            <strong>{{ p.nombre }}</strong>
+          </div>
+          <div class="resumen-fila">
+            <span class="text-white-50">Mensualidad</span>
+            <strong>S/ {{ p.mensualidad | number: '1.2-2' }}</strong>
+          </div>
+          <div class="resumen-fila">
+            <span class="text-white-50">Cuota de socio</span>
+            <strong>S/ {{ cuotaSocio | number: '1.2-2' }}</strong>
+          </div>
+          <div class="resumen-fila">
+            <span class="text-white-50">Otros pagos</span>
+            <strong>S/ {{ otrosPagos | number: '1.2-2' }}</strong>
+          </div>
+
+          <div class="resumen-total d-flex justify-content-between align-items-center mt-3">
+            <span class="fs-5 text-white-50 fw-semibold">Total</span>
+            <span class="fs-3 fw-bold text-success">S/ {{ total() | number: '1.2-2' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="resumen-box p-4">
+          <h4 class="fw-bold text-white mb-3">Tus datos</h4>
+
+          @if (error()) {
+            <div class="alert alert-danger text-center small py-2">{{ error() }}</div>
+          }
+
+          <form [formGroup]="form" (ngSubmit)="inscribir()">
+            <app-campo etiqueta="Correo electrónico" clase="form-control-mem" tipo="email"
+              placeholder="correo@ejemplo.com" [control]="form.controls.correo" />
+            <app-campo etiqueta="Contraseña" clase="form-control-mem" tipo="password"
+              placeholder="Mínimo 6 caracteres" [control]="form.controls.contrasena" />
+
+            <div class="row">
+              <app-campo etiqueta="Altura (cm)" clase="form-control-mem" contenedor="col-6 mb-3" tipo="number"
+                step="0.1" min="50" max="250" placeholder="170" [control]="form.controls.talla" />
+              <app-campo etiqueta="Peso (kg)" clase="form-control-mem" contenedor="col-6 mb-3" tipo="number"
+                step="0.1" min="1" max="999" placeholder="70.0" [control]="form.controls.peso" />
+            </div>
+
+            <app-campo etiqueta="Teléfono" clase="form-control-mem" contenedor="mb-4"
+              placeholder="987654321" [control]="form.controls.telefono" />
+
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" [disabled]="enviando()">
+            </button>
+          </form>
+
+          <div class="text-center mt-3 text-white-50 small">
+            ¿Ya eres miembro?
+            <a routerLink="/login" class="text-decoration-underline text-primary">Inicia sesión</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

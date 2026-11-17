@@ -1,0 +1,52 @@
+@if (usuario(); as u) {
+  <div class="container my-5" style="max-width: 640px">
+    <div class="card card-custom p-4">
+      <div class="text-center mb-3">
+        <i class="bi bi-person-circle text-primary" style="font-size: 5rem"></i>
+        <h3 class="fw-bold text-white mt-2 mb-0">{{ u.nombre }}</h3>
+      </div>
+
+      <div class="resumen-fila">
+        <span class="text-white-50"><i class="bi bi-envelope-fill text-primary me-2"></i>Correo</span>
+        <strong>{{ u.correo }}</strong>
+      </div>
+      <div class="resumen-fila">
+        <span class="text-white-50"><i class="bi bi-telephone-fill text-primary me-2"></i>Teléfono</span>
+        <strong>{{ u.telefono }}</strong>
+      </div>
+      <div class="resumen-fila">
+        <span class="text-white-50"><i class="bi bi-award-fill text-primary me-2"></i>Plan elegido</span>
+        <strong>{{ u.plan ? u.plan + ' - ' + u.sede : 'Sin plan elegido' }}</strong>
+      </div>
+
+      <h5 class="section-title fw-bold text-white fs-6 mt-4">Índice de masa corporal</h5>
+      @if (imc(); as imc) {
+        <div>
+          <div class="row text-center">
+            <div class="col-4">
+              <div class="text-white-50 small">Altura</div>
+              <div class="fw-bold fs-5">{{ u.talla }} cm</div>
+            </div>
+            <div class="col-4">
+              <div class="text-white-50 small">Peso</div>
+              <div class="fw-bold fs-5">{{ u.peso }} kg</div>
+            </div>
+            <div class="col-4">
+              <div class="text-white-50 small">IMC</div>
+              <div class="fw-bold fs-5 text-primary">{{ imc.valor.toFixed(1) }}</div>
+            </div>
+          </div>
+          <div class="text-center mt-3">
+            <span [class]="'badge px-4 py-2 fs-6 ' + imc.color">{{ imc.categoria }}</span>
+          </div>
+        </div>
+      } @else {
+        <p class="text-white-50 text-center mb-0">Sin datos de altura y peso.</p>
+      }
+
+      <button type="button" class="btn btn-outline-danger w-100 fw-bold mt-4" (click)="cerrarSesion()">
+        <i class="bi bi-box-arrow-right me-1"></i> Cerrar sesión
+      </button>
+    </div>
+  </div>
+}

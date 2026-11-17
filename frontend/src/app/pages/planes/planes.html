@@ -1,0 +1,40 @@
+@if (sede) {
+  <div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 section-title">
+      <div>
+        <h2 class="fw-bold text-white m-0">Planes en {{ sede.nombre }}</h2>
+        <small class="text-white-50">
+          <i class="bi bi-geo-alt text-primary me-1"></i>
+          {{ sede.direccion }}
+        </small>
+      </div>
+      <a routerLink="/miembro" class="btn btn-link text-decoration-none text-white-50 p-0 fw-bold">
+        <i class="bi bi-arrow-left me-1"></i> Cambiar sede
+      </a>
+    </div>
+
+    <div class="row g-4">
+      @for (p of planes(); track p.id) {
+        <div class="col-md-4">
+          <div class="card plan-card p-4">
+            <h4 class="fw-bold text-white">{{ p.nombre }}</h4>
+            <div class="plan-precio my-2">
+              S/ {{ p.mensualidad | number: '1.2-2' }} <small class="fs-6 text-white-50 fw-normal">/ mes</small>
+            </div>
+            <ul class="plan-lista mb-4">
+              @for (b of beneficios(p); track b) {
+                <li>
+                  <i class="bi bi-check-circle-fill text-primary me-2"></i>
+                  {{ b }}
+                </li>
+              }
+            </ul>
+            <a [routerLink]="['/inscripcion', sede.id, p.id]" class="btn btn-primary mt-auto fw-bold py-2">
+              Inscribirme ahora
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+}

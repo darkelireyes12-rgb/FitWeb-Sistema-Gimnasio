@@ -1,0 +1,68 @@
+<div class="container mt-5">
+  <h2 class="fw-bold text-white section-title mb-4">Reservar un servicio</h2>
+
+  @if (mensaje()) {
+    <div class="alert alert-success py-2">{{ mensaje() }}</div>
+  }
+  @if (error()) {
+    <div class="alert alert-danger py-2">{{ error() }}</div>
+  }
+
+  <div class="resumen-box p-4 mb-5">
+    <form [formGroup]="form" (ngSubmit)="reservar()">
+      <div class="row g-3 align-items-end">
+        <div class="col-md-5">
+          <label class="form-label text-white small">Servicio</label>
+          <select class="form-select form-control-mem" formControlName="servicioId">
+            <option [ngValue]="null">Elige un servicio</option>
+            @for (s of servicios(); track s.id) {
+              <option [ngValue]="s.id">{{ s.nombre }} - S/ {{ s.precio | number: '1.2-2' }}</option>
+            }
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label text-white small">Fecha y hora</label>
+          <input class="form-control form-control-mem" type="datetime-local" formControlName="fechaHora" />
+        </div>
+        <div class="col-md-3">
+          <button type="submit" class="btn btn-primary w-100 fw-bold">Reservar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <h4 class="fw-bold text-white mb-3">Mi historial de reservas</h4>
+  <div class="table-responsive">
+    <table class="table table-dark table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Servicio</th>
+          <th>Fecha y hora</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of reservas(); track r.id) {
+          <tr>
+            <td>{{ r.servicio }}</td>
+            <td>{{ r.fechaHora | date: 'dd/MM/yyyy HH:mm' }}</td>
+            <td>
+              <span class="badge" [class.bg-success]="r.estado === 'ACTIVA'" [class.bg-secondary]="r.estado !== 'ACTIVA'">
+                {{ r.estado }}
+              </span>
+            </td>
+            <td>
+              @if (r.estado === 'ACTIVA') {
+                <button type="button" class="btn btn-sm btn-outline-danger" (click)="cancelar(r)">Cancelar</button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  @if (reservas().length === 0) {
+    <p class="text-white-50 text-center">Aún no tienes reservas.</p>
+  }
+</div>

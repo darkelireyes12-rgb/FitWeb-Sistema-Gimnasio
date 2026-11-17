@@ -1,0 +1,82 @@
+<div class="container mt-5">
+  <div class="mb-4 section-title">
+    <h2 class="fw-bold text-white m-0">Panel de administrador</h2>
+  </div>
+
+  <app-admin-menu activa="usuarios" />
+
+  @if (mensaje()) {
+    <div class="alert alert-success py-2">{{ mensaje() }}</div>
+  }
+  @if (error()) {
+    <div class="alert alert-danger py-2">{{ error() }}</div>
+  }
+
+  @if (editando(); as u) {
+    <div class="resumen-box p-4 mb-4">
+      <h5 class="fw-bold text-white mb-3">Editar a {{ u.nombre }}</h5>
+      <form [formGroup]="form" (ngSubmit)="guardar()">
+        <div class="row g-3">
+          <app-campo etiqueta="Correo" clase="form-control-mem" contenedor="col-md-4" tipo="email"
+            [control]="form.controls.correo" />
+          <app-campo etiqueta="Teléfono" clase="form-control-mem" contenedor="col-md-4"
+            [control]="form.controls.telefono" />
+          <div class="col-md-4">
+            <label class="form-label text-white small">Plan</label>
+            <select class="form-select form-control-mem" formControlName="planId">
+              <option [ngValue]="null">Sin plan</option>
+              @for (p of planes(); track p.id) {
+                <option [ngValue]="p.id">{{ p.nombre }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <button type="submit" class="btn btn-primary fw-bold px-4 me-2">Guardar</button>
+          <button type="button" class="btn btn-outline-light" (click)="editando.set(null)">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  }
+
+  <form class="d-flex gap-2 mb-3" (submit)="buscarUsuarios($event)">
+    <input class="form-control form-control-mem" placeholder="Buscar por nombre o correo" [formControl]="buscar" />
+    <button type="submit" class="btn btn-outline-light">Buscar</button>
+  </form>
+
+  <div class="table-responsive">
+    <table class="table table-dark table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Teléfono</th>
+          <th>Rol</th>
+          <th>Plan</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (u of usuarios(); track u.id) {
+          <tr>
+            <td>{{ u.id }}</td>
+            <td>{{ u.nombre }}</td>
+            <td>{{ u.correo }}</td>
+            <td>{{ u.telefono }}</td>
+            <td>{{ u.rol }}</td>
+            <td>{{ u.plan || '-' }}</td>
+            <td class="text-nowrap">
+              <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="editar(u)">Editar</button>
+              <button type="button" class="btn btn-sm btn-outline-danger" (click)="eliminar(u)">Eliminar</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  @if (usuarios().length === 0) {
+    <p class="text-white-50 text-center">No hay usuarios.</p>
+  }
+</div>

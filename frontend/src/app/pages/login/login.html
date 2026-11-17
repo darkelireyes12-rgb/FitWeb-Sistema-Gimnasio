@@ -1,0 +1,37 @@
+<div class="page-login">
+  <app-logo-esquina />
+  <div class="card login-card shadow-lg">
+    <div class="text-center mb-4">
+      <h2 class="text-white"><strong class="text-primary-blue">FIT</strong>WEB</h2>
+      <p class="text-white-50 small">Ingresa a tu cuenta de gimnasio</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="iniciarSesion()">
+      @if (error()) {
+        <div class="alert alert-danger text-center small py-2">{{ error() }}</div>
+      }
+      @if (exito) {
+        <div class="alert alert-success text-center small py-2">Éxito. Ya puedes iniciar sesión.</div>
+      }
+      @if (logout) {
+        <div class="alert alert-info text-center small py-2">Sesión cerrada correctamente.</div>
+      }
+
+      <app-campo etiqueta="Correo electrónico" clase="form-control-dark" tipo="email"
+        placeholder="ejemplo@correo.com" [control]="form.controls.correo" />
+      <app-campo etiqueta="Contraseña" clase="form-control-dark" tipo="password"
+        placeholder="********" [control]="form.controls.contrasena" />
+
+      <button type="submit" class="btn btn-primary-blue w-100 py-2 fw-bold">Iniciar Sesión</button>
+    </form>
+
+    <div class="text-center mt-4 text-white-50 small">
+      ¿Olvidó su clave?
+      <a routerLink="/recover" class="text-decoration-underline text-primary-blue">Hacer un clic aquí</a>
+      <br />
+      <br />
+      ¿No tienes cuenta?
+      <a routerLink="/miembro" class="text-decoration-underline text-primary-blue">Sé miembro</a>
+    </div>
+  </div>
+</div>

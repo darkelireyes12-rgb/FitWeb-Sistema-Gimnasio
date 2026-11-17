@@ -1,0 +1,76 @@
+<div class="container mt-5">
+  <div class="mb-4 section-title">
+    <h2 class="fw-bold text-white m-0">Panel de administrador</h2>
+  </div>
+
+  <app-admin-menu activa="reservas" />
+
+
+  @if (reporte(); as r) {
+    <div class="row g-3 mb-4 text-center">
+      <div class="col-md-4">
+        <div class="resumen-box p-3">
+          <div class="text-white-50 small">Usuarios</div>
+          <div class="fs-2 fw-bold">{{ r.usuarios }}</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="resumen-box p-3">
+          <div class="text-white-50 small">Reservas activas</div>
+          <div class="fs-2 fw-bold text-success">{{ r.reservasActivas }}</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="resumen-box p-3">
+          <div class="text-white-50 small">Reservas canceladas</div>
+          <div class="fs-2 fw-bold text-danger">{{ r.reservasCanceladas }}</div>
+        </div>
+      </div>
+    </div>
+
+    @if (r.porServicio.length > 0) {
+      <div class="resumen-box p-4 mb-4">
+        <h5 class="fw-bold text-white mb-3">Reservas activas por servicio</h5>
+        @for (p of r.porServicio; track p.servicio) {
+          <div class="resumen-fila">
+            <span class="text-white-50">{{ p.servicio }}</span>
+            <strong>{{ p.total }}</strong>
+          </div>
+        }
+      </div>
+    }
+  }
+
+  <h5 class="fw-bold text-white mb-3">Todas las reservas</h5>
+  <div class="table-responsive">
+    <table class="table table-dark table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Cliente</th>
+          <th>Servicio</th>
+          <th>Fecha y hora</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of reservas(); track r.id) {
+          <tr>
+            <td>{{ r.id }}</td>
+            <td>{{ r.cliente }}</td>
+            <td>{{ r.servicio }}</td>
+            <td>{{ r.fechaHora | date: 'dd/MM/yyyy HH:mm' }}</td>
+            <td>
+              <span class="badge" [class.bg-success]="r.estado === 'ACTIVA'" [class.bg-secondary]="r.estado !== 'ACTIVA'">
+                {{ r.estado }}
+              </span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  @if (reservas().length === 0) {
+    <p class="text-white-50 text-center">No hay reservas.</p>
+  }
+</div>

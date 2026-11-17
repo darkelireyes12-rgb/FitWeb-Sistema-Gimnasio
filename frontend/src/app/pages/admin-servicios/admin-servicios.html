@@ -1,0 +1,66 @@
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4 section-title">
+    <h2 class="fw-bold text-white m-0">Panel de administrador</h2>
+    <button type="button" class="btn btn-primary fw-bold" (click)="abrir(null)">Nuevo servicio</button>
+  </div>
+
+  <app-admin-menu activa="servicios" />
+
+  @if (mensaje()) {
+    <div class="alert alert-success py-2">{{ mensaje() }}</div>
+  }
+  @if (error()) {
+    <div class="alert alert-danger py-2">{{ error() }}</div>
+  }
+
+  @if (formAbierto()) {
+    <div class="resumen-box p-4 mb-4">
+      <h5 class="fw-bold text-white mb-3">{{ editandoId() ? 'Editar servicio' : 'Nuevo servicio' }}</h5>
+      <form [formGroup]="form" (ngSubmit)="guardar()">
+        <div class="row g-3">
+          <app-campo etiqueta="Nombre" clase="form-control-mem" contenedor="col-md-4"
+            [control]="form.controls.nombre" />
+          <app-campo etiqueta="Descripción" clase="form-control-mem" contenedor="col-md-5"
+            [control]="form.controls.descripcion" />
+          <app-campo etiqueta="Precio (S/)" clase="form-control-mem" contenedor="col-md-3" tipo="number"
+            step="0.01" min="0" [control]="form.controls.precio" />
+        </div>
+        <div class="mt-4">
+          <button type="submit" class="btn btn-primary fw-bold px-4 me-2">Guardar</button>
+          <button type="button" class="btn btn-outline-light" (click)="formAbierto.set(false)">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  }
+
+  <div class="table-responsive">
+    <table class="table table-dark table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Precio</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (s of servicios(); track s.id) {
+          <tr>
+            <td>{{ s.id }}</td>
+            <td>{{ s.nombre }}</td>
+            <td>{{ s.descripcion }}</td>
+            <td>S/ {{ s.precio | number: '1.2-2' }}</td>
+            <td class="text-nowrap">
+              <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="abrir(s)">Editar</button>
+              <button type="button" class="btn btn-sm btn-outline-danger" (click)="eliminar(s)">Eliminar</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  @if (servicios().length === 0) {
+    <p class="text-white-50 text-center">No hay servicios.</p>
+  }
+</div>

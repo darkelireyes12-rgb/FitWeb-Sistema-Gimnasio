@@ -1,0 +1,28 @@
+<div [class]="contenedor()">
+  <label class="form-label text-white small">{{ etiqueta() }}</label>
+
+  @if (tipo() === 'number') {
+    <input
+      type="number"
+      [formControl]="control()"
+      [class]="'form-control ' + clase()"
+      [class.is-invalid]="control().invalid && control().touched"
+      [placeholder]="placeholder()"
+      [attr.min]="min() || null"
+      [attr.max]="max() || null"
+      [attr.step]="step() || null"
+    />
+  } @else {
+    <input
+      [type]="tipo()"
+      [formControl]="control()"
+      [class]="'form-control ' + clase()"
+      [class.is-invalid]="control().invalid && control().touched"
+      [placeholder]="placeholder()"
+    />
+  }
+
+  @if (control().invalid && control().touched) {
+    <div class="text-danger small mt-1">{{ mensaje() }}</div>
+  }
+</div>

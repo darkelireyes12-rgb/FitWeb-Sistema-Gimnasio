@@ -1,0 +1,11 @@
+// Estilos globales. Cada archivo de src/styles/ lleva el prefijo de su pantalla
+// (.page-ini, .page-login, .page-rec), así que no se mezclan entre sí.
+@use './styles/style-ini';
+@use './styles/style-mem';
+@use './styles/style-login';
+@use './styles/style-rec';
+
+body {
+  margin: 0;
+  background-color: #1e1e1e;
+}

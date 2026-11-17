@@ -1,0 +1,25 @@
+<div class="page-rec">
+  <app-logo-esquina />
+  <div class="container d-flex justify-content-center">
+    <div class="card rec-card shadow p-4">
+      <div class="text-center mb-4">
+        <i class="bi bi-key-fill text-success fs-1"></i>
+        <h2 class="fw-bold mt-2 text-white">Nueva Contraseña</h2>
+        <p class="text-white-50 small">Escribe tu nueva clave secreta de acceso.</p>
+      </div>
+
+      @if (error()) {
+        <div class="alert alert-danger text-center small py-2 fw-bold">{{ error() }}</div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="cambiarClave()">
+        <app-campo etiqueta="Nueva Clave" clase="form-control-custom" contenedor="mb-4" tipo="password"
+          placeholder="Escribe tu nueva contraseña..." [control]="form.controls.nuevaClave" />
+
+        <button type="submit" class="btn btn-success w-100 py-2 fw-bold" style="border-radius: 6px">
+          Actualizar y Entrar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

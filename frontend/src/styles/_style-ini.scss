@@ -1,0 +1,78 @@
+.page-ini {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.page-ini .hero-section {
+    background: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 1)),
+                url('/Imagenes-gym/inicio.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 120px 0;
+    border-bottom: 2px solid #0d6efd;
+}
+
+.page-ini .section-title {
+    border-left: 5px solid #0d6efd;
+    padding-left: 15px;
+    margin-bottom: 30px;
+    color: #ffffff;
+}
+
+.page-ini .card-sede {
+    background-color: #1a1a1a;
+    color: #ffffff ;
+    border: 1px solid #333 ;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.page-ini .card-sede:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5) ;
+}
+
+.page-ini .card-sede img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.page-ini .text-primary {
+    color: #0d6efd ;
+}
+
+.page-ini .btn-primary {
+    background-color: #0d6efd ;
+    border: none ;
+    transition: background-color 0.3s ease;
+}
+
+.page-ini .btn-primary:hover {
+    background-color: #0b5ed7 ;
+}
+
+.page-ini .bg-dark {
+    background-color: #1a1a1a ;
+}
+
+.page-ini .text-secondary {
+    color: #adb5bd ;
+}
+
+.page-ini h1,
+.page-ini h2,
+.page-ini h3,
+.page-ini h4,
+.page-ini h5 {
+    letter-spacing: 0.5px;
+}
+
+.page-ini .lead {
+    color: #ced4da;
+}
+
+.page-ini .hover-effect:hover {
+    background-color: #222;
+    border-radius: 8px;
+    transition: 0.3s;
+}
